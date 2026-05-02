@@ -36,7 +36,7 @@ html {
 body {
   font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
   background-color: var(--creme);
-  color: var(--texto-escuro);
+  color: #333; /* Um cinza bem escuro para melhor legibilidade */
   line-height: 1.8;
   font-size: 17px;
 }
@@ -307,6 +307,16 @@ body {
   color: var(--vinho-dark);
 }
 
+#ficha-tecnica p,
+#ficha-tecnica li {
+  color: #333; /* Um cinza bem escuro para melhor legibilidade */
+  font-weight: 500; /* Levemente mais encorpado */
+}
+
+#ficha-tecnica h3 {
+  color: var(--vinho-dark); /* Manter o título da subseção em vinho escuro */
+}
+
 /* =============================================
    SINOPSE
    ============================================= */
@@ -322,7 +332,7 @@ body {
 .text-block p {
   margin-bottom: 18px;
   font-size: 1.05rem;
-  color: var(--texto-escuro);
+  color: #333; /* Um cinza bem escuro para melhor legibilidade */
   text-align: justify;
 }
 
@@ -399,7 +409,7 @@ body {
 
 .personagens-list .role {
   font-weight: 600;
-  color: var(--texto-escuro);
+  color: #333; /* Um cinza bem escuro para melhor legibilidade */
 }
 
 .personagens-list .voice {
@@ -568,7 +578,7 @@ body {
 .instituto-text p {
   margin-bottom: 18px;
   font-size: 1.05rem;
-  color: var(--texto-escuro);
+  color: #333; /* Um cinza bem escuro para melhor legibilidade */
   text-align: justify;
 }
 
@@ -679,7 +689,7 @@ body {
 
 .artist-bio {
   font-size: 1rem;
-  color: var(--texto-escuro);
+  color: #333; /* Um cinza bem escuro para melhor legibilidade */
   line-height: 1.8;
   margin-bottom: 16px;
   text-align: justify;
