@@ -50,7 +50,7 @@
 }
 
 .artist-name {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.8rem;
   font-weight: 700;
   color: var(--vinho-dark);
@@ -104,12 +104,14 @@
   display: flex;
   flex-direction: column;
   overflow: visible;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 /* Tachinha vermelha 3D */
 .artist-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -7px;
   left: 50%;
@@ -117,7 +119,12 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 28%, #C4445A 0%, #7A1F30 50%, #3A0810 100%);
+  background: radial-gradient(
+    circle at 30% 28%,
+    #c4445a 0%,
+    #7a1f30 50%,
+    #3a0810 100%
+  );
   box-shadow:
     0 3px 6px rgba(0, 0, 0, 0.5),
     inset 1.5px 2px 2px rgba(255, 255, 255, 0.4),
@@ -127,33 +134,59 @@
 
 /* Marca da tachinha pressionando o papel */
 .artist-card::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 4px;
   left: 50%;
   transform: translateX(-50%);
   width: 32px;
   height: 8px;
-  background: radial-gradient(ellipse at center, rgba(74, 14, 26, 0.3) 0%, transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(74, 14, 26, 0.3) 0%,
+    transparent 70%
+  );
   filter: blur(2px);
   z-index: 1;
   pointer-events: none;
 }
 
 /* Rotações sutis por posição (papel pregado casualmente) */
-.artist-card:nth-child(1) { --rot: -0.5deg; }
-.artist-card:nth-child(2) { --rot:  0.4deg; }
-.artist-card:nth-child(3) { --rot: -0.3deg; }
-.artist-card:nth-child(4) { --rot:  0.5deg; }
-.artist-card:nth-child(5) { --rot:  0.3deg; }
-.artist-card:nth-child(6) { --rot: -0.4deg; }
-.artist-card:nth-child(7) { --rot:  0.5deg; }
-.artist-card:nth-child(8) { --rot: -0.3deg; }
+.artist-card:nth-child(1) {
+  --rot: -0.5deg;
+}
+.artist-card:nth-child(2) {
+  --rot: 0.4deg;
+}
+.artist-card:nth-child(3) {
+  --rot: -0.3deg;
+}
+.artist-card:nth-child(4) {
+  --rot: 0.5deg;
+}
+.artist-card:nth-child(5) {
+  --rot: 0.3deg;
+}
+.artist-card:nth-child(6) {
+  --rot: -0.4deg;
+}
+.artist-card:nth-child(7) {
+  --rot: 0.5deg;
+}
+.artist-card:nth-child(8) {
+  --rot: -0.3deg;
+}
 
 /* Transforms com especificidade extra pra vencer ui.css */
-.artists-grid .artist-card         { transform: translateY(20px) rotate(var(--rot)); }
-.artists-grid .artist-card.visible { transform: translateY(0) rotate(var(--rot)); }
-.artists-grid .artist-card:hover   { transform: rotate(var(--rot)) translateY(-5px); }
+.artists-grid .artist-card {
+  transform: translateY(20px) rotate(var(--rot));
+}
+.artists-grid .artist-card.visible {
+  transform: translateY(0) rotate(var(--rot));
+}
+.artists-grid .artist-card:hover {
+  transform: rotate(var(--rot)) translateY(-5px);
+}
 
 .artists-grid .artist-card:hover {
   box-shadow:
@@ -174,13 +207,18 @@
 }
 
 .artist-photo-frame::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(to right, transparent, var(--dourado), transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--dourado),
+    transparent
+  );
 }
 
 .artist-card-body {
@@ -205,7 +243,7 @@
 }
 
 .artist-card-name {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--vinho-dark);
@@ -268,14 +306,14 @@
   background: linear-gradient(180deg, #fffdf6 0%, #fbf2dc 100%);
   border-radius: 4px;
   box-shadow:
-    0 4px 14px rgba(44, 24, 16, 0.10),
+    0 4px 14px rgba(44, 24, 16, 0.1),
     0 0 0 1px rgba(201, 168, 76, 0.22);
   border: 0;
   margin: 0;
 }
 
 .voice-group h4 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: "Cormorant Garamond", serif;
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -310,8 +348,12 @@
     grid-template-columns: repeat(3, 1fr);
   }
   /* Recalibrar rotações pra grid de 3 colunas (pares ímpares se misturam) */
-  .artist-card:nth-child(7) { --rot: -0.4deg; }
-  .artist-card:nth-child(8) { --rot:  0.4deg; }
+  .artist-card:nth-child(7) {
+    --rot: -0.4deg;
+  }
+  .artist-card:nth-child(8) {
+    --rot: 0.4deg;
+  }
 }
 
 @media (max-width: 900px) {
@@ -320,8 +362,12 @@
     text-align: center;
   }
 
-  .maestro-photo-placeholder { justify-content: center; }
-  .artist-tags              { justify-content: center; }
+  .maestro-photo-placeholder {
+    justify-content: center;
+  }
+  .artist-tags {
+    justify-content: center;
+  }
 
   .artists-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -340,6 +386,51 @@
   .choir-list {
     grid-template-columns: 1fr;
     padding: 22px 18px;
+  }
+
+  .maestro-feature {
+    padding: 28px 22px;
+    gap: 24px;
+  }
+
+  .photo-frame {
+    width: 150px;
+    height: 150px;
+  }
+
+  .artist-name {
+    font-size: 1.5rem;
+  }
+  .artist-bio {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    text-align: left;
+  }
+}
+
+@media (max-width: 380px) {
+  .artist-card {
+    padding: 32px 12px 14px;
+  }
+  .artist-card-name {
+    font-size: 1rem;
+  }
+  .artist-card-bio {
+    font-size: 0.78rem;
+  }
+  .role-badge-sm {
+    font-size: 0.62rem;
+  }
+
+  .maestro-feature {
+    padding: 24px 16px;
+  }
+  .photo-frame {
+    width: 130px;
+    height: 130px;
+  }
+  .artist-name {
+    font-size: 1.3rem;
   }
 }
 
@@ -366,13 +457,23 @@
 }
 
 @keyframes bio-modal-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes bio-modal-pop-in {
-  from { opacity: 0; transform: scale(0.94) translateY(16px) rotate(-0.5deg); }
-  to   { opacity: 1; transform: scale(1) translateY(0) rotate(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(16px) rotate(-0.5deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotate(0);
+  }
 }
 
 .bio-modal-card {
@@ -405,14 +506,19 @@
 
 /* Tachinha "prende" a foto — canto superior esquerdo da própria imagem */
 .bio-modal-photo::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 14px;
   left: 14px;
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 28%, #C4445A 0%, #7A1F30 50%, #3A0810 100%);
+  background: radial-gradient(
+    circle at 30% 28%,
+    #c4445a 0%,
+    #7a1f30 50%,
+    #3a0810 100%
+  );
   box-shadow:
     0 4px 10px rgba(0, 0, 0, 0.6),
     0 2px 4px rgba(0, 0, 0, 0.4),
@@ -440,7 +546,7 @@
 }
 
 .bio-modal-name {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
   font-size: 1.7rem;
   font-weight: 700;
   color: var(--vinho-dark);
@@ -493,7 +599,9 @@
   text-align: justify;
 }
 
-.bio-modal-bio strong { color: var(--vinho); }
+.bio-modal-bio strong {
+  color: var(--vinho);
+}
 
 /* Badges de naipe + personagem, lado a lado abaixo do nome */
 .bio-modal-role {
@@ -535,7 +643,10 @@
   align-items: center;
   justify-content: center;
   z-index: 10;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.3s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.3s ease;
 }
 
 .bio-modal-close:hover {
@@ -557,17 +668,40 @@ body.modal-open {
 @media (max-width: 700px) {
   .bio-modal-card {
     grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
     gap: 22px;
     padding: 32px 22px 26px;
-    max-height: 500px;
+    max-height: 90vh;
   }
 
   .bio-modal-frame {
-    max-width: 220px;
+    max-width: 200px;
     margin: 0 auto;
     align-self: center;
   }
 
-  .bio-modal-name { font-size: 1.4rem; }
-  .bio-modal-bio  { font-size: 16px; }
+  /* Em mobile o photo precisa de aspect-ratio (não tem container com altura) */
+  .bio-modal-photo {
+    flex: none;
+    aspect-ratio: 4 / 5;
+  }
+
+  .bio-modal-name {
+    font-size: 1.4rem;
+  }
+  .bio-modal-bio {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .bio-modal-card {
+    padding: 28px 18px 22px;
+  }
+  .bio-modal-frame {
+    max-width: 170px;
+  }
+  .bio-modal-name {
+    font-size: 1.25rem;
+  }
 }

@@ -679,4 +679,28 @@ blockquote.companhia-destaque {
   }
 
   .gallery-item-large { grid-column: span 1; }
+
+  /* Justify cria buracos feios em colunas estreitas — força left-align */
+  .text-block p,
+  .companhia-text p,
+  .instituto-text p,
+  .aria-desc,
+  .artist-card-bio,
+  .bio-modal-bio { text-align: left; }
+
+  /* Drop cap menor em telas estreitas */
+  .drop-cap::first-letter {
+    font-size: 3rem;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Reduz padding lateral pra dar mais espaço útil */
+  .section { padding: 60px 16px; }
+}
+
+@media (max-width: 380px) {
+  .section { padding: 50px 14px; }
+  .section-header { gap: 8px; margin-bottom: 36px; }
 }

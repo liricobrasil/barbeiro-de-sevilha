@@ -3,6 +3,7 @@
 import { initEntryAnimations, initStatsCounter } from './animations.js';
 import { initNav, initSmoothScroll } from './nav.js';
 import { initCastBios } from './cast-bio.js';
+import { initCardTilt } from './card-tilt.js';
 import { initScrollUI } from './ui.js';
 
 function init() {
@@ -11,6 +12,7 @@ function init() {
   initNav();
   initSmoothScroll();
   initCastBios();
+  initCardTilt();
   initScrollUI();
 }
 
