@@ -1,0 +1,133 @@
+/* =============================================
+   UI INTERATIVO — animações, scroll spy, progress, back-to-top, bio toggle
+   ============================================= */
+
+/* Animações de entrada por scroll */
+.section-header,
+.artist-card,
+.aria-card,
+.pillar,
+.stat-card,
+.maestro-feature,
+.info-card,
+.equipe-col {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section-header.visible,
+.artist-card.visible,
+.aria-card.visible,
+.pillar.visible,
+.stat-card.visible,
+.maestro-feature.visible,
+.info-card.visible,
+.equipe-col.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Atrasos escalonados */
+.artist-card:nth-child(1) { transition-delay: 0.05s; }
+.artist-card:nth-child(2) { transition-delay: 0.10s; }
+.artist-card:nth-child(3) { transition-delay: 0.15s; }
+.artist-card:nth-child(4) { transition-delay: 0.20s; }
+.artist-card:nth-child(5) { transition-delay: 0.25s; }
+.artist-card:nth-child(6) { transition-delay: 0.30s; }
+.artist-card:nth-child(7) { transition-delay: 0.35s; }
+.artist-card:nth-child(8) { transition-delay: 0.40s; }
+
+.aria-card:nth-child(1) { transition-delay: 0.1s; }
+.aria-card:nth-child(2) { transition-delay: 0.2s; }
+.aria-card:nth-child(3) { transition-delay: 0.3s; }
+.aria-card:nth-child(4) { transition-delay: 0.4s; }
+
+.pillar:nth-child(1) { transition-delay: 0.1s; }
+.pillar:nth-child(2) { transition-delay: 0.2s; }
+.pillar:nth-child(3) { transition-delay: 0.3s; }
+.pillar:nth-child(4) { transition-delay: 0.4s; }
+
+/* Nav do hero quando fixa no topo */
+.hero-nav.nav-fixed {
+  position: fixed;
+  bottom: auto;
+  top: 0;
+  z-index: 1000;
+  background: rgba(44, 24, 16, 0.95);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-nav a.active {
+  background: rgba(201, 168, 76, 0.2);
+  color: var(--dourado-pale);
+}
+
+/* Botão "ler mais/menos" das bios dos artistas */
+.bio-toggle {
+  background: none;
+  border: 1px solid var(--vinho);
+  color: var(--vinho);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  margin-top: 8px;
+  font-family: 'EB Garamond', serif;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.bio-toggle:hover {
+  background: var(--vinho);
+  color: var(--dourado-pale);
+}
+
+/* Barra de progresso de leitura */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--vinho), var(--dourado));
+  z-index: 9999;
+  width: 0%;
+  transition: width 0.1s ease;
+  pointer-events: none;
+}
+
+/* Botão "voltar ao topo" */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 46px;
+  height: 46px;
+  background: var(--vinho);
+  color: var(--dourado-pale);
+  border: 2px solid var(--dourado);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, color 0.2s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(44, 24, 16, 0.3);
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--dourado);
+  color: var(--vinho-dark);
+}

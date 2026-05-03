@@ -1,0 +1,52 @@
+/* =============================================
+   BASE — variáveis, reset, tipografia global
+   ============================================= */
+
+:root {
+  --vinho: #6B1A2A;
+  --vinho-dark: #4A0F1C;
+  --vinho-light: #8B2A3A;
+  --dourado: #C9A84C;
+  --dourado-light: #E8C97A;
+  --dourado-pale: #F5E6B8;
+  --bege: #F4ECD8;
+  --bege-dark: #E8D9B8;
+  --marrom: #5C3A1E;
+  --marrom-light: #8B5E3C;
+  --creme: #FAF6EE;
+  --texto-escuro: #2C1810;
+  --texto-medio: #5C3A1E;
+  --texto-claro: #F4ECD8;
+  --texto-corpo: #333;
+  --sombra: rgba(44, 24, 16, 0.15);
+  --sombra-forte: rgba(44, 24, 16, 0.35);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+  background-color: var(--creme);
+  color: var(--texto-corpo);
+  line-height: 1.8;
+  font-size: 17px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

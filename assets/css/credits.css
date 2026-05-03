@@ -1,0 +1,129 @@
+/* =============================================
+   CRÉDITOS — ficha técnica, equipe, patrocinadores, apoio
+   ============================================= */
+
+#ficha-tecnica p,
+#ficha-tecnica li {
+  color: var(--texto-corpo);
+  font-weight: 500;
+}
+
+#ficha-tecnica h3 {
+  color: var(--vinho-dark);
+}
+
+.equipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.equipe-col-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--dourado);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+}
+
+.section-light .equipe-col-title {
+  color: var(--vinho);
+  border-bottom-color: rgba(107, 26, 42, 0.2);
+}
+
+.equipe-list {
+  list-style: none;
+}
+
+.equipe-list li {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+}
+
+.equipe-list li:last-child { border-bottom: none; }
+
+.equipe-role {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dourado);
+  opacity: 0.8;
+}
+
+.section-light .equipe-role {
+  color: var(--vinho);
+  opacity: 0.85;
+}
+
+.equipe-name {
+  font-size: 0.98rem;
+  color: var(--dourado-pale);
+  font-weight: 500;
+}
+
+.section-light .equipe-name {
+  color: var(--texto-corpo);
+}
+
+/* Patrocinadores e Apoio */
+.patrocinadores,
+.apoio-section {
+  border-top: 1px solid rgba(201, 168, 76, 0.3);
+  padding-top: 40px;
+  text-align: center;
+}
+
+.apoio-section {
+  margin-top: 60px;
+  border-top: none;
+}
+
+.patrocinadores-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--dourado);
+  margin-bottom: 30px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.brand-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.brand-item {
+  background: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+}
+
+.brand-item img {
+  max-width: 200px;
+  max-height: 80px;
+  width: auto;
+  height: auto;
+  display: block;
+}
+
+.brand-item--tall img {
+  max-height: 120px;
+}
+
+@media (max-width: 600px) {
+  .equipe-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

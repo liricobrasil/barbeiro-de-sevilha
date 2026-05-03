@@ -1,0 +1,52 @@
+/* =============================================
+   RODAPÉ
+   ============================================= */
+
+.footer {
+  background: var(--texto-escuro);
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.footer-ornament {
+  font-size: 1.5rem;
+  color: var(--dourado);
+  opacity: 0.6;
+  margin-bottom: 16px;
+  letter-spacing: 0.5em;
+}
+
+.footer-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--dourado-pale);
+  margin-bottom: 6px;
+}
+
+.footer-sub {
+  font-size: 0.9rem;
+  color: var(--bege);
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+.footer-date {
+  font-size: 0.85rem;
+  color: var(--dourado);
+  opacity: 0.8;
+  margin-bottom: 20px;
+}
+
+.footer-divider {
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--dourado), transparent);
+  margin: 20px auto;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--bege);
+  opacity: 0.4;
+  letter-spacing: 0.1em;
+}

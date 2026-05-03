@@ -1,0 +1,32 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Node (caso entre algum tooling no futuro)
+node_modules/
+.cache/
+dist/
+build/
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.*.local
+
+# Lixeira de download (Windows-style numbered duplicates)
+*\ \(*\).*
+
+# Servidor local de desenvolvimento (helper)
+.serve.cjs
