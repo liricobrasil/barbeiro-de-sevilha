@@ -68,15 +68,26 @@
 }
 
 /* =============================================
-   SINOPSE
+   SINOPSE — grid 2 colunas com altura sincronizada (assimétrico interno)
    ============================================= */
 
-.two-col {
+.sinopse-grid {
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 50px;
-  align-items: start;
-  margin-bottom: 60px;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.sinopse-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+/* Item de baixo de cada coluna absorve o espaço sobrando — chave do layout */
+.sinopse-col > *:last-child {
+  flex: 1;
 }
 
 .text-block p {
@@ -85,6 +96,8 @@
   color: var(--texto-corpo);
   text-align: justify;
 }
+
+.text-block p:last-child { margin-bottom: 0; }
 
 .drop-cap::first-letter {
   font-family: 'Playfair Display', serif;
@@ -98,50 +111,111 @@
 }
 
 .info-card {
-  background: white;
-  border: 1px solid var(--bege-dark);
-  border-top: 4px solid var(--vinho);
-  border-radius: 4px;
-  padding: 24px;
-  box-shadow: 0 4px 20px var(--sombra);
-  margin-bottom: 20px;
+  --rot: 0deg;
+  position: relative;
+  background: linear-gradient(180deg, #fffdf6 0%, #fbf2dc 100%);
+  border-radius: 3px;
+  padding: 38px 26px 28px;
+  box-shadow:
+    0 4px 10px rgba(44, 24, 16, 0.18),
+    0 14px 28px rgba(44, 24, 16, 0.14),
+    0 0 0 1px rgba(201, 168, 76, 0.18);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  overflow: visible;
+}
+
+/* Tachinha vermelha 3D — mesmo idioma das árias */
+.info-card::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%, #C4445A 0%, #7A1F30 50%, #3A0810 100%);
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.5),
+    inset 1.5px 2px 2px rgba(255, 255, 255, 0.4),
+    inset -1px -2px 3px rgba(0, 0, 0, 0.45);
+  z-index: 3;
+}
+
+/* Marca da pressão da tachinha no papel */
+.info-card::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 8px;
+  background: radial-gradient(ellipse at center, rgba(74, 14, 26, 0.32) 0%, transparent 70%);
+  filter: blur(2px);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .info-card-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  color: var(--vinho);
-  margin-bottom: 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--bege-dark);
-}
-
-.info-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-
-.info-table tr {
-  border-bottom: 1px solid var(--bege-dark);
-}
-
-.info-table tr:last-child { border-bottom: none; }
-
-.info-table td {
-  padding: 8px 4px;
-  vertical-align: top;
-}
-
-.info-table .label {
+  font-style: italic;
+  font-size: 1.25rem;
   font-weight: 600;
-  color: var(--vinho);
-  width: 45%;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  color: var(--vinho-dark);
+  text-align: center;
+  margin-bottom: 22px;
+  letter-spacing: 0.01em;
 }
 
+/* Rotações sutis — Ficha levemente pra direita, Personagens pra esquerda */
+.sinopse-col > .info-card:first-child { --rot:  0.4deg; }
+.sinopse-col > .info-card:last-child  { --rot: -0.3deg; }
+
+/* Transforms com especificidade extra pra vencer ui.css */
+.sinopse-grid .info-card           { transform: translateY(20px) rotate(var(--rot)); }
+.sinopse-grid .info-card.visible   { transform: translateY(0) rotate(var(--rot)); }
+.sinopse-grid .info-card:hover     { transform: rotate(var(--rot)) translateY(-4px); }
+
+.sinopse-grid .info-card:hover {
+  box-shadow:
+    0 6px 14px rgba(44, 24, 16, 0.22),
+    0 20px 38px rgba(44, 24, 16, 0.18),
+    0 0 0 1px rgba(201, 168, 76, 0.4);
+}
+
+/* Ficha da Obra — definition list */
+.info-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+}
+
+.info-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+.info-row dt {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--dourado);
+  margin-bottom: 4px;
+}
+
+.info-row dd {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  color: var(--vinho-dark);
+  margin: 0;
+}
+
+/* Personagens — chip-style voice badge */
 .personagens-list {
   list-style: none;
 }
@@ -150,106 +224,158 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--bege-dark);
-  font-size: 0.9rem;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.2);
 }
 
-.personagens-list li:last-child { border-bottom: none; }
+.personagens-list li:last-child { border-bottom: none; padding-bottom: 0; }
 
 .personagens-list .role {
+  font-family: 'Playfair Display', serif;
   font-weight: 600;
-  color: var(--texto-corpo);
+  font-size: 1.02rem;
+  color: var(--vinho-dark);
 }
 
 .personagens-list .voice {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--vinho);
-  font-style: italic;
-  font-size: 0.82rem;
+  background: rgba(201, 168, 76, 0.18);
+  border: 1px solid rgba(201, 168, 76, 0.45);
+  padding: 4px 11px;
+  border-radius: 20px;
+  white-space: nowrap;
 }
 
-/* Árias */
+/* Árias — flex column pra grid interno esticar verticalmente */
 .arias-section {
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .subsection-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.4rem;
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 600;
   color: var(--vinho);
-  margin-bottom: 24px;
   text-align: center;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+}
+
+.subsection-title::after {
+  content: '';
+  display: block;
+  width: 70px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--dourado), transparent);
+  margin: 10px auto 0;
 }
 
 .arias-grid {
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 18px;
 }
 
+/* Card como folha de papel presa por tachinha */
 .aria-card {
-  background: white;
-  border: 1px solid var(--bege-dark);
-  border-left: 4px solid var(--dourado);
-  border-radius: 4px;
-  padding: 20px;
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  box-shadow: 0 2px 10px var(--sombra);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-left-color 0.3s ease;
+  --rot: 0deg;
+  position: relative;
+  background: linear-gradient(180deg, #fffdf6 0%, #fbf2dc 100%);
+  border-radius: 3px;
+  padding: 38px 22px 24px;
+  box-shadow:
+    0 4px 10px rgba(44, 24, 16, 0.18),
+    0 14px 28px rgba(44, 24, 16, 0.14),
+    0 0 0 1px rgba(201, 168, 76, 0.18);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  overflow: visible;
 }
 
-.aria-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px var(--sombra-forte);
-  border-left-color: var(--vinho);
+/* Tachinha vermelha 3D */
+.aria-card::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%, #C4445A 0%, #7A1F30 50%, #3A0810 100%);
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.5),
+    inset 1.5px 2px 2px rgba(255, 255, 255, 0.4),
+    inset -1px -2px 3px rgba(0, 0, 0, 0.45);
+  z-index: 3;
 }
 
-.aria-icon {
-  font-size: 1.8rem;
-  color: var(--dourado);
-  flex-shrink: 0;
-  line-height: 1;
+/* "Marca" no papel onde a tachinha pressiona */
+.aria-card::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 8px;
+  background: radial-gradient(ellipse at center, rgba(74, 14, 26, 0.32) 0%, transparent 70%);
+  filter: blur(2px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Rotações sutis pra dar cara de "preso casualmente" */
+.aria-card:nth-child(1) { --rot: -0.8deg; }
+.aria-card:nth-child(2) { --rot:  0.7deg; }
+.aria-card:nth-child(3) { --rot:  0.4deg; }
+.aria-card:nth-child(4) { --rot: -0.6deg; }
+
+/* Transforms com especificidade extra (.arias-grid) pra vencer ui.css */
+.arias-grid .aria-card           { transform: translateY(20px) rotate(var(--rot)); }
+.arias-grid .aria-card.visible   { transform: translateY(0) rotate(var(--rot)); }
+.arias-grid .aria-card:hover     { transform: rotate(var(--rot)) translateY(-4px); }
+
+.arias-grid .aria-card:hover {
+  box-shadow:
+    0 6px 14px rgba(44, 24, 16, 0.22),
+    0 20px 38px rgba(44, 24, 16, 0.18),
+    0 0 0 1px rgba(201, 168, 76, 0.4);
 }
 
 .aria-name {
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 1rem;
+  font-size: 1.08rem;
   font-weight: 600;
   color: var(--vinho);
-  margin-bottom: 6px;
+  margin-bottom: 12px;
+  text-align: center;
+  line-height: 1.3;
 }
 
 .aria-desc {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--texto-medio);
-  line-height: 1.6;
+  line-height: 1.7;
+  text-align: justify;
+  margin: 0;
 }
 
 /* =============================================
    COMPANHIA
    ============================================= */
 
-.companhia-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-  align-items: start;
-}
-
-.companhia-logo-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.companhia-logo {
-  max-width: 100%;
-  height: auto;
-  max-height: 180px;
-  filter: drop-shadow(0 4px 8px rgba(201, 168, 76, 0.2));
+.companhia-text {
+  margin-bottom: 56px;
 }
 
 .companhia-text p {
@@ -257,73 +383,119 @@
   font-size: 1.05rem;
   color: var(--dourado-pale);
   opacity: 0.95;
+  text-align: justify;
 }
 
-.companhia-destaque blockquote {
+blockquote.companhia-destaque {
   border-left: 3px solid var(--dourado);
-  padding: 16px 20px;
-  margin: 24px 0 0;
+  padding: 18px 24px;
+  margin: 32px 0 0;
   background: rgba(201, 168, 76, 0.08);
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 6px 6px 0;
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   color: var(--dourado-light);
   line-height: 1.6;
 }
 
 .companhia-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  list-style: none;
+  padding: 0;
 }
 
 .stat-card {
-  background: rgba(201, 168, 76, 0.1);
-  border: 1px solid rgba(201, 168, 76, 0.3);
+  position: relative;
+  background: linear-gradient(180deg, rgba(201, 168, 76, 0.12) 0%, rgba(201, 168, 76, 0.04) 100%);
+  border: 1px solid rgba(201, 168, 76, 0.28);
   border-radius: 8px;
-  padding: 24px;
+  padding: 36px 22px 28px;
   text-align: center;
+  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.stat-card::before {
+  content: '✦';
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--dourado);
+  opacity: 0.55;
+  font-size: 0.9rem;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(180deg, rgba(201, 168, 76, 0.20) 0%, rgba(201, 168, 76, 0.06) 100%);
+  border-color: rgba(201, 168, 76, 0.55);
 }
 
 .stat-number {
+  display: block;
   font-family: 'Playfair Display', serif;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 700;
   color: var(--dourado);
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 14px rgba(201, 168, 76, 0.25);
 }
 
 .stat-label {
-  font-size: 0.85rem;
+  display: block;
+  font-size: 0.78rem;
   color: var(--dourado-pale);
-  opacity: 0.8;
-  line-height: 1.4;
+  opacity: 0.85;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 /* =============================================
-   INSTITUTO
+   INSTITUTO — visual institucional/sóbrio
    ============================================= */
 
-.instituto-content {
+.instituto-intro {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
-  align-items: start;
+  grid-template-columns: minmax(0, 320px) 1fr;
+  gap: 60px;
+  align-items: center;
+  margin-bottom: 56px;
 }
 
-.instituto-logo-section {
+.instituto-logo-frame {
+  position: relative;
+  background: linear-gradient(135deg, #fdf8e8 0%, #f0e3c2 100%);
+  padding: 28px 24px;
+  border-radius: 4px;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(201, 168, 76, 0.55);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+}
+
+.instituto-logo-frame::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(107, 26, 42, 0.18);
+  border-radius: 2px;
+  pointer-events: none;
 }
 
 .instituto-logo {
+  display: block;
   max-width: 100%;
   height: auto;
-  max-height: 300px;
-  filter: drop-shadow(0 4px 8px rgba(44, 24, 16, 0.15));
+  max-height: 220px;
+  position: relative;
+  z-index: 1;
 }
 
 .instituto-text p {
@@ -333,42 +505,69 @@
   text-align: justify;
 }
 
+.instituto-text p:last-child { margin-bottom: 0; }
+
+/* Pilares — cards sóbrios com numeração romana */
 .instituto-pillars {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .pillar {
   background: white;
-  border: 1px solid var(--bege-dark);
-  border-top: 3px solid var(--vinho);
-  border-radius: 4px;
-  padding: 20px;
-  box-shadow: 0 2px 10px var(--sombra);
-  transition: transform 0.3s ease;
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  border-radius: 2px;
+  padding: 28px 22px 24px;
+  box-shadow: 0 4px 16px rgba(44, 24, 16, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .pillar:hover {
   transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(44, 24, 16, 0.12);
+  border-color: rgba(201, 168, 76, 0.6);
 }
 
-.pillar-icon {
-  font-size: 2rem;
-  margin-bottom: 10px;
+.pillar-num {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--dourado);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.pillar-num::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--dourado);
+  margin-top: 10px;
+  opacity: 0.7;
 }
 
 .pillar h4 {
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
+  font-size: 0.92rem;
+  font-weight: 600;
   color: var(--vinho);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.3;
 }
 
 .pillar p {
   font-size: 0.88rem;
   color: var(--texto-medio);
-  line-height: 1.6;
+  line-height: 1.65;
   margin: 0;
 }
 
@@ -381,6 +580,8 @@
   grid-template-columns: 2fr 1fr 1fr;
   grid-template-rows: 200px 200px;
   gap: 12px;
+  list-style: none;
+  padding: 0;
 }
 
 .gallery-item {
@@ -437,27 +638,20 @@
 
 /* Responsividade */
 @media (max-width: 900px) {
-  .two-col { grid-template-columns: 1fr; }
+  .sinopse-grid { grid-template-columns: 1fr; }
+  .sinopse-col > *:last-child { flex: none; }
 
-  .info-card-block {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+  .instituto-intro {
+    grid-template-columns: 1fr;
+    gap: 36px;
   }
 
-  .companhia-content { grid-template-columns: 1fr; }
-
-  .companhia-stats {
-    flex-direction: row;
-    flex-wrap: wrap;
+  .instituto-logo-frame {
+    max-width: 320px;
+    margin: 0 auto;
   }
 
-  .stat-card {
-    flex: 1;
-    min-width: 150px;
-  }
-
-  .instituto-content { grid-template-columns: 1fr; }
+  .instituto-pillars { grid-template-columns: repeat(2, 1fr); }
 
   .gallery-grid {
     grid-template-columns: 1fr 1fr;
@@ -471,9 +665,13 @@
 }
 
 @media (max-width: 600px) {
-  .info-card-block { grid-template-columns: 1fr; }
-  .arias-grid { grid-template-columns: 1fr; }
+  .arias-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
   .instituto-pillars { grid-template-columns: 1fr; }
+
+  .companhia-stats { grid-template-columns: 1fr; }
 
   .gallery-grid {
     grid-template-columns: 1fr;

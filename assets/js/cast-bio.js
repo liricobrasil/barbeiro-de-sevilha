@@ -1,41 +1,70 @@
-// Bios dos artistas: trunca em N caracteres e adiciona botão "Ler mais / Ler menos".
-
-const TRUNCATE_AT = 180;
+// Cards mostram teaser da bio (3 linhas via line-clamp). Click no botão "Ler mais"
+// abre um modal estilizado com a bio completa.
 
 export function initCastBios() {
   const cards = document.querySelectorAll('.artist-card');
+  const modal = document.querySelector('.bio-modal');
+  if (!cards.length || !modal) return;
 
-  cards.forEach((card) => {
-    const bio = card.querySelector('.artist-card-bio');
-    const body = card.querySelector('.artist-card-body');
-    if (!bio || !body) return;
+  const card     = modal.querySelector('.bio-modal-card');
+  const photo    = modal.querySelector('.bio-modal-photo');
+  const role     = modal.querySelector('.bio-modal-role');
+  const name     = modal.querySelector('.bio-modal-name');
+  const voice    = modal.querySelector('.bio-modal-voice');
+  const bio      = modal.querySelector('.bio-modal-bio');
+  const closeBtn = modal.querySelector('.bio-modal-close');
 
-    const fullHTML = bio.innerHTML;
-    const fullText = bio.textContent.trim();
-    if (fullText.length <= TRUNCATE_AT) return;
+  let lastFocused = null;
 
-    const shortText = fullText.slice(0, TRUNCATE_AT).trimEnd() + '…';
-    bio.textContent = shortText;
+  function open(sourceCard) {
+    lastFocused = document.activeElement;
 
-    const toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'bio-toggle';
-    toggle.textContent = 'Ler mais';
-    toggle.setAttribute('aria-expanded', 'false');
+    const photoStyle = sourceCard.querySelector('.artist-photo-frame')?.getAttribute('style') || '';
+    photo.setAttribute('style', photoStyle);
 
-    let expanded = false;
-    toggle.addEventListener('click', () => {
-      expanded = !expanded;
-      if (expanded) {
-        bio.innerHTML = fullHTML;
-        toggle.textContent = 'Ler menos';
-      } else {
-        bio.textContent = shortText;
-        toggle.textContent = 'Ler mais';
-      }
-      toggle.setAttribute('aria-expanded', String(expanded));
-    });
+    role.textContent  = sourceCard.querySelector('.role-badge-sm')?.textContent.trim() || '';
+    name.textContent  = sourceCard.querySelector('.artist-card-name')?.textContent.trim() || '';
+    voice.textContent = sourceCard.querySelector('.artist-voice-badge')?.textContent.trim() || '';
+    bio.innerHTML     = sourceCard.querySelector('.artist-card-bio')?.innerHTML || '';
 
-    body.appendChild(toggle);
+    modal.hidden = false;
+    document.body.classList.add('modal-open');
+    closeBtn.focus();
+  }
+
+  function close() {
+    modal.hidden = true;
+    document.body.classList.remove('modal-open');
+    if (lastFocused && typeof lastFocused.focus === 'function') {
+      lastFocused.focus();
+    }
+  }
+
+  cards.forEach((c) => {
+    const body = c.querySelector('.artist-card-body');
+    if (!body) return;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'bio-toggle';
+    btn.textContent = 'Ler mais';
+    btn.setAttribute(
+      'aria-label',
+      `Ler bio completa de ${c.querySelector('.artist-card-name')?.textContent.trim() || 'artista'}`
+    );
+    btn.addEventListener('click', () => open(c));
+    body.appendChild(btn);
+  });
+
+  closeBtn.addEventListener('click', close);
+
+  // Click fora do card-modal fecha
+  modal.addEventListener('click', (e) => {
+    if (!card.contains(e.target)) close();
+  });
+
+  // ESC fecha
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.hidden) close();
   });
 }

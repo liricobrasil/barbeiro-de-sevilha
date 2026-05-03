@@ -1,12 +1,13 @@
 /* =============================================
-   ELENCO — maestro feature, artist cards, choir list
+   ELENCO — maestro feature + grid de polaroids + roster do coro
    ============================================= */
 
+/* Maestro mantém o destaque (banner full-width no topo) */
 .maestro-feature {
   display: grid;
   grid-template-columns: 200px 1fr;
   gap: 40px;
-  align-items: start;
+  align-items: center;
   background: white;
   border: 1px solid var(--bege-dark);
   border-top: 5px solid var(--vinho);
@@ -22,8 +23,8 @@
 }
 
 .photo-frame {
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--vinho), var(--marrom));
   background-size: cover;
@@ -80,37 +81,94 @@
   letter-spacing: 0.05em;
 }
 
-/* Grid de artistas */
+/* =============================================
+   Polaroids do elenco — 4 cols × 2 rows
+   ============================================= */
+
 .artists-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px 22px;
 }
 
 .artist-card {
-  background: white;
-  border: 1px solid var(--bege-dark);
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px var(--sombra);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  --rot: 0deg;
+  position: relative;
+  background: linear-gradient(180deg, #fffdf6 0%, #fbf2dc 100%);
+  border-radius: 3px;
+  padding: 36px 14px 16px;
+  box-shadow:
+    0 4px 10px rgba(44, 24, 16, 0.18),
+    0 14px 28px rgba(44, 24, 16, 0.14),
+    0 0 0 1px rgba(201, 168, 76, 0.18);
   display: flex;
   flex-direction: column;
+  overflow: visible;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.artist-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 40px var(--sombra-forte);
+/* Tachinha vermelha 3D */
+.artist-card::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%, #C4445A 0%, #7A1F30 50%, #3A0810 100%);
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.5),
+    inset 1.5px 2px 2px rgba(255, 255, 255, 0.4),
+    inset -1px -2px 3px rgba(0, 0, 0, 0.45);
+  z-index: 3;
+}
+
+/* Marca da tachinha pressionando o papel */
+.artist-card::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 8px;
+  background: radial-gradient(ellipse at center, rgba(74, 14, 26, 0.3) 0%, transparent 70%);
+  filter: blur(2px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Rotações sutis por posição (papel pregado casualmente) */
+.artist-card:nth-child(1) { --rot: -0.5deg; }
+.artist-card:nth-child(2) { --rot:  0.4deg; }
+.artist-card:nth-child(3) { --rot: -0.3deg; }
+.artist-card:nth-child(4) { --rot:  0.5deg; }
+.artist-card:nth-child(5) { --rot:  0.3deg; }
+.artist-card:nth-child(6) { --rot: -0.4deg; }
+.artist-card:nth-child(7) { --rot:  0.5deg; }
+.artist-card:nth-child(8) { --rot: -0.3deg; }
+
+/* Transforms com especificidade extra pra vencer ui.css */
+.artists-grid .artist-card         { transform: translateY(20px) rotate(var(--rot)); }
+.artists-grid .artist-card.visible { transform: translateY(0) rotate(var(--rot)); }
+.artists-grid .artist-card:hover   { transform: rotate(var(--rot)) translateY(-5px); }
+
+.artists-grid .artist-card:hover {
+  box-shadow:
+    0 6px 14px rgba(44, 24, 16, 0.22),
+    0 22px 40px rgba(44, 24, 16, 0.18),
+    0 0 0 1px rgba(201, 168, 76, 0.4);
 }
 
 .artist-photo-frame {
-  height: 500px;
-  background: linear-gradient(135deg, var(--vinho-dark), var(--marrom));
+  aspect-ratio: 4 / 5;
+  background-color: var(--vinho-dark);
   background-size: cover;
   background-position: center top;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 2px;
+  margin-bottom: 14px;
   position: relative;
   overflow: hidden;
 }
@@ -121,92 +179,139 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: linear-gradient(to right, var(--dourado), var(--dourado-light), var(--dourado));
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--dourado), transparent);
 }
 
 .artist-card-body {
-  padding: 24px;
-  flex: 1;
   display: flex;
   flex-direction: column;
+  flex: 1;
+  text-align: center;
 }
 
 .role-badge-sm {
-  display: inline-block;
+  align-self: center;
   background: rgba(107, 26, 42, 0.08);
   color: var(--vinho);
   border: 1px solid rgba(107, 26, 42, 0.2);
   padding: 3px 10px;
   border-radius: 20px;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 8px;
+  max-width: 100%;
 }
 
 .artist-card-name {
   font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--vinho-dark);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  line-height: 1.25;
 }
 
+/* Bio mostra teaser de 3 linhas no card; modal mostra completa ao clicar "Ler mais" */
 .artist-card-bio {
-  font-size: 0.92rem;
+  font-size: 0.8rem;
   color: var(--texto-medio);
-  line-height: 1.75;
-  flex: 1;
-  margin-bottom: 14px;
+  line-height: 1.55;
+  margin: 0 0 10px;
+  text-align: justify;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .artist-voice-badge {
-  display: inline-block;
+  align-self: center;
   background: var(--dourado-pale);
   border: 1px solid var(--dourado);
   color: var(--marrom);
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.05em;
-  align-self: flex-start;
+  margin-bottom: 10px;
 }
 
-/* Lista do coro dentro do card do ICBIE */
+/* Botão "Ler mais" — abre modal */
+.artist-card .bio-toggle {
+  align-self: center;
+  margin-top: auto;
+  font-size: 0.72rem;
+  padding: 4px 14px;
+}
+
+/* =============================================
+   Coralistas do ICBIE — subseção própria abaixo do grid
+   ============================================= */
+
+.choir-roster {
+  margin-top: 56px;
+}
+
+.choir-roster .subsection-title {
+  margin-bottom: 28px;
+}
+
 .choir-list {
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--bege-dark);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px 32px;
+  padding: 28px 32px;
+  background: linear-gradient(180deg, #fffdf6 0%, #fbf2dc 100%);
+  border-radius: 4px;
+  box-shadow:
+    0 4px 14px rgba(44, 24, 16, 0.10),
+    0 0 0 1px rgba(201, 168, 76, 0.22);
+  border: 0;
+  margin: 0;
 }
 
-.choir-list h4 {
+.voice-group h4 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--vinho);
-  margin: 14px 0 6px;
-  padding-bottom: 4px;
-  border-bottom: 1px solid rgba(107, 26, 42, 0.15);
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(107, 26, 42, 0.2);
 }
 
-.choir-list h4:first-child { margin-top: 0; }
-
-.choir-list ul {
+.voice-group ul {
   list-style: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
   padding: 0;
+  margin: 0;
 }
 
-.choir-list li {
-  font-size: 0.85rem;
+.voice-group li {
+  font-size: 0.88rem;
   color: var(--texto-medio);
-  line-height: 1.5;
+  line-height: 1.55;
+}
+
+/* =============================================
+   Responsivo
+   ============================================= */
+
+@media (max-width: 1000px) {
+  .artists-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  /* Recalibrar rotações pra grid de 3 colunas (pares ímpares se misturam) */
+  .artist-card:nth-child(7) { --rot: -0.4deg; }
+  .artist-card:nth-child(8) { --rot:  0.4deg; }
 }
 
 @media (max-width: 900px) {
@@ -215,12 +320,15 @@
     text-align: center;
   }
 
-  .maestro-photo-placeholder {
-    justify-content: center;
+  .maestro-photo-placeholder { justify-content: center; }
+  .artist-tags              { justify-content: center; }
+
+  .artists-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .artist-tags {
-    justify-content: center;
+  .choir-list {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -228,4 +336,238 @@
   .artists-grid {
     grid-template-columns: 1fr;
   }
+
+  .choir-list {
+    grid-template-columns: 1fr;
+    padding: 22px 18px;
+  }
+}
+
+/* =============================================
+   MODAL DE BIO — popup paper-pinned ao clicar no polaroid
+   ============================================= */
+
+.bio-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(20, 8, 12, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: bio-modal-fade-in 0.25s ease;
+}
+
+.bio-modal[hidden] {
+  display: none;
+}
+
+@keyframes bio-modal-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes bio-modal-pop-in {
+  from { opacity: 0; transform: scale(0.94) translateY(16px) rotate(-0.5deg); }
+  to   { opacity: 1; transform: scale(1) translateY(0) rotate(0); }
+}
+
+.bio-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 780px;
+  max-height: 500px;
+  display: grid;
+  grid-template-columns: minmax(0, 240px) 1fr;
+  grid-template-rows: minmax(0, 1fr);
+  gap: 36px;
+  background: linear-gradient(180deg, #fffdf6 0%, #fbf2dc 100%);
+  border-radius: 4px;
+  padding: 36px 40px;
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.4),
+    0 32px 80px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(201, 168, 76, 0.4);
+  overflow: hidden;
+  animation: bio-modal-pop-in 0.32s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+/* Container da foto — só estrutura, sem moldura visível */
+.bio-modal-frame {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+}
+
+/* Tachinha "prende" a foto — canto superior esquerdo da própria imagem */
+.bio-modal-photo::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%, #C4445A 0%, #7A1F30 50%, #3A0810 100%);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    inset 1.5px 2.5px 2.5px rgba(255, 255, 255, 0.4),
+    inset -1.5px -2.5px 4px rgba(0, 0, 0, 0.45);
+  z-index: 3;
+}
+
+.bio-modal-photo {
+  flex: 1;
+  width: 100%;
+  background-color: var(--vinho-dark);
+  background-size: cover;
+  background-position: center top;
+  border-radius: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bio-modal-content {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  min-height: 0;
+}
+
+.bio-modal-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--vinho-dark);
+  margin: 0 0 12px;
+  line-height: 1.18;
+  flex-shrink: 0;
+}
+
+.bio-modal-badges {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.bio-modal-bio {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 12px;
+  /* Scrollbar discreto, "como página de livro" */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(107, 26, 42, 0.4) rgba(201, 168, 76, 0.08);
+}
+
+.bio-modal-bio::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bio-modal-bio::-webkit-scrollbar-track {
+  background: rgba(201, 168, 76, 0.08);
+  border-radius: 3px;
+}
+
+.bio-modal-bio::-webkit-scrollbar-thumb {
+  background: rgba(107, 26, 42, 0.35);
+  border-radius: 3px;
+}
+
+.bio-modal-bio::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 26, 42, 0.55);
+}
+
+/* Tipografia do bio (texto rola dentro do flex column) */
+.bio-modal-bio {
+  font-size: 18px;
+  color: var(--texto-medio);
+  line-height: 1.65;
+  text-align: justify;
+}
+
+.bio-modal-bio strong { color: var(--vinho); }
+
+/* Badges de naipe + personagem, lado a lado abaixo do nome */
+.bio-modal-role {
+  background: rgba(107, 26, 42, 0.08);
+  color: var(--vinho);
+  border: 1px solid rgba(107, 26, 42, 0.25);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bio-modal-voice {
+  background: var(--dourado-pale);
+  border: 1px solid var(--dourado);
+  color: var(--marrom);
+  padding: 4px 14px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.bio-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(107, 26, 42, 0.18);
+  background: rgba(255, 253, 246, 0.92);
+  color: var(--vinho);
+  border-radius: 50%;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.3s ease;
+}
+
+.bio-modal-close:hover {
+  background: var(--vinho);
+  color: var(--dourado-pale);
+  transform: rotate(90deg);
+}
+
+.bio-modal-close:focus-visible {
+  outline: 2px solid var(--dourado);
+  outline-offset: 2px;
+}
+
+/* Body com modal aberto não scrolla (gerenciado via JS adicionando .modal-open) */
+body.modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 700px) {
+  .bio-modal-card {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 32px 22px 26px;
+    max-height: 500px;
+  }
+
+  .bio-modal-frame {
+    max-width: 220px;
+    margin: 0 auto;
+    align-self: center;
+  }
+
+  .bio-modal-name { font-size: 1.4rem; }
+  .bio-modal-bio  { font-size: 16px; }
 }
