@@ -1,0 +1,9 @@
+{
+  "name": "barbeiro-de-sevilha",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Programa Musical Oficial — O Barbeiro de Sevilha (Rossini), Companhia de Ópera Lírico Brasil",
+  "scripts": {
+    "dev": "npx --yes serve -l 4173 ."
+  }
+}
